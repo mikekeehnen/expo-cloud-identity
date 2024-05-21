@@ -1,6 +1,6 @@
 {
   "name": "expo-cloud-identity",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Manages cloud related function to indentify users or sync data to iCloud or Google Drive",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -22,6 +22,9 @@
     "ExpoCloudIdentity"
   ],
   "repository": "https://github.com/mikekeehnen/expo-cloud-identity",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "bugs": {
     "url": "https://github.com/mikekeehnen/expo-cloud-identity/issues"
   },

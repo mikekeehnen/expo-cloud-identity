@@ -6,12 +6,14 @@ export default function App() {
   const [userIdentity, setUserIdentity] = useState<string | null>(null);
 
   useEffect(() => {
-    ExpoCloudIdentity.getUserIdentity().then(setUserIdentity);
+    ExpoCloudIdentity.getUserIdentity().then((id) => {
+      setUserIdentity(id);
+    });
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>{userIdentity}</Text>
+      <Text>User identity: {userIdentity}</Text>
     </View>
   );
 }
