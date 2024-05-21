@@ -1,6 +1,6 @@
 {
   "name": "expo-cloud-identity",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Manages cloud related function to indentify users or sync data to iCloud or Google Drive",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -21,9 +21,12 @@
     "expo-cloud-identity",
     "ExpoCloudIdentity"
   ],
-  "repository": "https://github.com/mikekeehnen/expo-cloud-identity",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikekeehnen/expo-cloud-identity.git"
+  },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@mike_keehnen:registry": "https://npm.pkg.github.com"
   },
   "bugs": {
     "url": "https://github.com/mikekeehnen/expo-cloud-identity/issues"
@@ -31,7 +34,6 @@
   "author": "Mike Keehnen <mikekeehnen@me.com> (https://github.com/mikekeehnen)",
   "license": "MIT",
   "homepage": "https://github.com/mikekeehnen/expo-cloud-identity#readme",
-  "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.25",
     "expo-module-scripts": "^3.5.1",
@@ -41,5 +43,8 @@
     "expo": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "directories": {
+    "example": "example"
   }
 }
