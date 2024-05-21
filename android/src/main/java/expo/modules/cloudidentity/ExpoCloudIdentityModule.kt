@@ -6,6 +6,8 @@ import expo.modules.kotlin.modules.ModuleDefinition
 
 import android.accounts.AccountManager
 import android.app.Activity
+import android.util.Base64
+import android.content.Context
 
 private const val USER_IDENTITY_CODE = 1
 
@@ -28,7 +30,13 @@ class ExpoCloudIdentityModule : Module() {
 
             pendingPromise = promise
 
+          
+            val accountName = getAccountName()            
+            if (accountName != null) {
+                promise.resolve(accountName)
+            } else {
             currentActivity.startActivityForResult(intent, USER_IDENTITY_CODE)
+            }
         }
 
         OnActivityResult { _, (requestCode, resultCode, intent) ->
@@ -41,12 +49,28 @@ class ExpoCloudIdentityModule : Module() {
             if (resultCode == Activity.RESULT_OK && intent != null) {
                 try {
                     val accountName = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-                    promise.resolve(accountName)
+                    if (accountName != null){
+                      val encodedAccountName = Base64.encodeToString(accountName.toByteArray(), Base64.DEFAULT)
+                      saveAccountName(encodedAccountName)
+                      promise.resolve(encodedAccountName)
+                    } else {
+                      promise.reject("[ExpoCloudIdentity]", "Account name is null", null)
+                    }
                 } catch (e: Exception) {
                     promise.reject("[ExpoCloudIdentity]", e.message, e)
                 }
             }
         }
+    }
+    
+    private fun saveAccountName(accountName: String) {
+        val sharedPreferences = currentActivity.getSharedPreferences("expo.modules.cloudidentity", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("accountName", accountName).apply()
+    }
+
+    private fun getAccountName(): String? {
+        val sharedPreferences = currentActivity.getSharedPreferences("expo.modules.cloudidentity", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("accountName", null)
     }
 
     private val currentActivity: Activity
