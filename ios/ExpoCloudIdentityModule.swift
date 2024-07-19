@@ -1,5 +1,6 @@
 import ExpoModulesCore
 import CloudKit
+import Foundation
 
 public class ExpoCloudIdentityModule: Module {
   // Each module class must implement the definition function. The definition consists of components
@@ -17,7 +18,7 @@ public class ExpoCloudIdentityModule: Module {
         if let error = error {
           promise.reject("ERROR_FETCHING", "Error fetching user record ID: \(error.localizedDescription)")
         } else if let recordID = recordID {
-          promise.resolve(recordID.recordName)
+          promise.resolve(recordID.recordName.data(using: .utf8)!.base64EncodedString())
         } else {
           promise.reject("UNKNOWN_ERROR","Unknown error occurred")
         }
